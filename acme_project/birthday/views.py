@@ -4,6 +4,14 @@ from .forms import BirthdayForm
 from .utils import calculate_birthday_countdown
 from .models import Birthday
 
+
+def birthday_list(request):
+    # Получаем все объекты модели Birthday из БД.
+    birthdays = Birthday.objects.all()
+    # Передаём их в контекст шаблона.
+    context = {'birthdays': birthdays}
+    return render(request, 'birthday/birthday_list.html', context)
+
 def birthday(request):
     form = BirthdayForm(request.POST or None)
     # Создаём словарь контекста сразу после инициализации формы.
@@ -19,8 +27,3 @@ def birthday(request):
         # Обновляем словарь контекста: добавляем в него новый элемент.
         context.update({'birthday_countdown': birthday_countdown})
     return render(request, 'birthday/birthday.html', context)
-
-def birthdays_list(request):
-    birthdays = Birthday.objects.all()
-    context = {'birthdays': birthdays}
-    return render(request, 'birthday/birthdays_list.html', context)
