@@ -33,3 +33,4 @@ class BirthdayDetailView(DetailView):
             self.object.birthday
         )
         return context
+
